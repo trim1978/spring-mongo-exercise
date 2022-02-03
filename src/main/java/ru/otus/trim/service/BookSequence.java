@@ -3,15 +3,15 @@ package ru.otus.trim.service;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "ids_sequences")
-public class DatabaseSequence {
+@Document(collection = "books_sequences")
+public class BookSequence {
 
     @Id
     private String id;
 
-    private int seq;
+    private long seq;
 
-    public DatabaseSequence() {
+    public BookSequence() {
     }
 
     public String getId() {
@@ -22,11 +22,11 @@ public class DatabaseSequence {
         this.id = id;
     }
 
-    public int getSeq() {
+    public long getSeq() {
         return seq;
     }
 
-    public void setSeq(int seq) {
+    public void setSeq(long seq) {
         this.seq = seq;
     }
 

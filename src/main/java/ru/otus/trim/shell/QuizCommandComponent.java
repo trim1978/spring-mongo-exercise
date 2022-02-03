@@ -5,6 +5,7 @@ import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import ru.otus.trim.model.Author;
 import ru.otus.trim.model.Book;
+import ru.otus.trim.model.Comment;
 import ru.otus.trim.model.Genre;
 import ru.otus.trim.service.LibraryService;
 
@@ -56,6 +57,13 @@ public class QuizCommandComponent {
     @ShellMethod(value = "Get all books", key = {"get_books","gab"})
     public List<Book> getBooks() {
         return library.getBooks();
+    }
+
+
+
+    @ShellMethod(value = "Get comments", key = {"get_comments", "gc"})
+    public List<Comment> getComments(long id) {
+        return library.getCommentsByBookId(id);
     }
 
 }

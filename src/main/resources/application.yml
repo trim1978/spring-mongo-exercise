@@ -9,7 +9,7 @@ spring:
 
   shell:    # отключение shell
     interactive:
-      enabled: false
+      enabled: true
 
 
 mongock:

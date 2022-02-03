@@ -3,30 +3,31 @@ package ru.otus.trim.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "comments")
+@Document
 public class Comment {
-    @Id // Позволяет указать какое поле является идентификатором
-    private long id;
+    //@Id // Позволяет указать какое поле является идентификатором
+    private long time;
     private String text;
 
     public Comment(String text) {
+        this.time = System.currentTimeMillis();
         this.text = text;
     }
 
     public Comment() {
     }
 
-    public Comment(long id, String text) {
-        this.id = id;
+    public Comment(long time, String text) {
+        this.time = time;
         this.text = text;
     }
 
-    public long getId() {
-        return id;
+    public long getTime() {
+        return time;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setTime(long time) {
+        this.time = time;
     }
 
     public String getText() {

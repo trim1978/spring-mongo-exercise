@@ -3,6 +3,7 @@ package ru.otus.trim.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.otus.trim.model.Comment;
 import ru.otus.trim.repository.AuthorRepository;
 import ru.otus.trim.repository.BookRepository;
 import ru.otus.trim.repository.GenreRepository;
@@ -10,6 +11,8 @@ import ru.otus.trim.model.Author;
 import ru.otus.trim.model.Book;
 import ru.otus.trim.model.Genre;
 
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -84,5 +87,14 @@ public class LibraryServiceImpl implements LibraryService {
     @Override
     public List<Genre> getGenres() {
         return genres.findAll();
+    }
+
+
+
+    @Override
+    public List<Comment> getCommentsByBookId(long bookID) {
+        Book book = books.findById(bookID).get();
+        if (book != null) return book.getComments();
+        return new LinkedList<Comment> ();
     }
 }
