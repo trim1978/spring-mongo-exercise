@@ -14,7 +14,7 @@ import java.util.List;
 
 @ShellComponent
 public class LibraryCommentComponent {
-    @Autowired
+    //@Autowired
     private LibraryService library;
 
     @ShellMethod(value = "Get comments", key = {"get_comments", "gc"})

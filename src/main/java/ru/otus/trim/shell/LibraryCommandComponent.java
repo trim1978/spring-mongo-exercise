@@ -13,7 +13,7 @@ import java.util.List;
 
 @ShellComponent
 public class LibraryCommandComponent {
-    @Autowired
+    //@Autowired
     private LibraryService library;
 
     @ShellMethod(value = "Add author", key = {"ins_author","ia","aa"})

@@ -16,7 +16,7 @@ import ru.otus.trim.service.LibraryService;
 public class MainDemo {
 
     @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
-    @Autowired
+    //@Autowired
     private AuthorRepository repository;
 
     public static void main(String[] args) throws InterruptedException {

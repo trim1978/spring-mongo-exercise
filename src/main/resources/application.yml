@@ -1,8 +1,8 @@
 spring:
   data:
     mongodb:
-      #uri: mongodb://localhost
-      #port: 27017
+      uri: mongodb://localhost
+      port: 27017
       database: library
   main:
     allow-circular-references: true

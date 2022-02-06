@@ -17,11 +17,11 @@ import java.util.List;
 
 @Service
 public class LibraryServiceImpl implements LibraryService {
-    @Autowired
+    //@Autowired
     public BookRepository books;
-    @Autowired
+    //@Autowired
     public AuthorRepository authors;
-    @Autowired
+    //@Autowired
     public GenreRepository genres;
 
 //    @Transactional
