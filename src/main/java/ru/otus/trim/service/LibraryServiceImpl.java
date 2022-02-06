@@ -97,4 +97,14 @@ public class LibraryServiceImpl implements LibraryService {
         if (book != null) return book.getComments();
         return new LinkedList<Comment> ();
     }
+
+    @Override
+    public void addCommentToBookById(long bookID, String text) {
+        Book book = books.findById(bookID).get();
+        if (book != null) {
+            book.addComment(text);
+            books.save(book);
+        }
+
+    }
 }

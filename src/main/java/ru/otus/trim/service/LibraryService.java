@@ -18,4 +18,5 @@ public interface LibraryService {
     List<Genre> getGenres ();
 
     List<Comment> getCommentsByBookId (long bookID);
+    void addCommentToBookById (long bookID, String text);
 }

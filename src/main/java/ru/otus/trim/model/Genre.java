@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Objects;
 
-@Document(collection = "genres")
+@Document//(collection = "genres")
 public class Genre {
     @Id // Позволяет указать какое поле является идентификатором
     private int id;

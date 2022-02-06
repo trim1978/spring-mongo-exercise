@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.LinkedList;
 import java.util.List;
 
-@Document(collection = "books")
+@Document//(collection = "books")
 public class Book {
     @Transient
     public static final String SEQUENCE_NAME = "books_sequence";
@@ -16,11 +16,11 @@ public class Book {
     @Id // Позволяет указать какое поле является идентификатором
     private long id;
     private String title;
-    @DBRef
+    //@DBRef
     private Author author;
-    @DBRef
+    //@DBRef
     private Genre genre;
-    @DBRef
+    //@DocumentReference
     private List<Comment> comments;
 
     public Book(String title, Author author, Genre genre) {

@@ -12,7 +12,7 @@ import ru.otus.trim.service.LibraryService;
 import java.util.List;
 
 @ShellComponent
-public class QuizCommandComponent {
+public class LibraryCommandComponent {
     @Autowired
     private LibraryService library;
 
@@ -57,13 +57,6 @@ public class QuizCommandComponent {
     @ShellMethod(value = "Get all books", key = {"get_books","gab"})
     public List<Book> getBooks() {
         return library.getBooks();
-    }
-
-
-
-    @ShellMethod(value = "Get comments", key = {"get_comments", "gc"})
-    public List<Comment> getComments(long id) {
-        return library.getCommentsByBookId(id);
     }
 
 }
