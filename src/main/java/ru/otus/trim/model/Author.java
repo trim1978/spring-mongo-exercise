@@ -4,7 +4,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document//(collection = "authors")
+@Document(collection = "authors")
 public class Author {
     @Id
     private int id;

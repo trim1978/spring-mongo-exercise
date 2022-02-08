@@ -5,8 +5,6 @@ import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import ru.otus.trim.model.Author;
 import ru.otus.trim.model.Book;
-import ru.otus.trim.model.Comment;
-import ru.otus.trim.model.Genre;
 import ru.otus.trim.service.LibraryService;
 
 import java.util.List;
@@ -50,7 +48,7 @@ public class LibraryCommandComponent {
     }
 
     @ShellMethod(value = "Get all genres", key = {"get_genres","gag"})
-    public List<Genre> getGenres() {
+    public List<String> getGenres() {
         return library.getGenres();
     }
 
@@ -58,5 +56,12 @@ public class LibraryCommandComponent {
     public List<Book> getBooks() {
         return library.getBooks();
     }
+
+
+    @ShellMethod(value = "Get books by genre", key = {"get_genre","gg"})
+    public List<Book> getBooksByGenre(String genre) {
+        return library.getBooksByGenre(genre);
+    }
+
 
 }

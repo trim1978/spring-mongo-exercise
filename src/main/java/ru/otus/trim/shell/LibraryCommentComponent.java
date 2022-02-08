@@ -7,7 +7,6 @@ import org.springframework.shell.standard.ShellOption;
 import ru.otus.trim.model.Author;
 import ru.otus.trim.model.Book;
 import ru.otus.trim.model.Comment;
-import ru.otus.trim.model.Genre;
 import ru.otus.trim.service.LibraryService;
 
 import java.util.List;

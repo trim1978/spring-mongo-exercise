@@ -13,7 +13,7 @@ import static org.springframework.data.mongodb.core.query.Query.query;
 
 @Service
 public class SequenceGeneratorService {
-    //@Autowired
+    @Autowired
     private MongoOperations mongoOperations;
 
     public int generateIntSequence(String seqName) {

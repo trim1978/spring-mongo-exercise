@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import ru.otus.trim.model.Author;
+import ru.otus.trim.model.Book;
 import ru.otus.trim.repository.AuthorRepository;
 import ru.otus.trim.service.LibraryService;
 
@@ -25,7 +26,17 @@ public class MainDemo {
         AuthorRepository repository = context.getBean(AuthorRepository.class);
         LibraryService library = context.getBean(LibraryService.class);
 
-        repository.save(new Author(5, "Dostoevsky"));
+        Author dost = new Author(5, "Dostoevsky");
+        repository.save(dost);
+        Book idiot = new Book("Idiot", dost, "drama");
+        library.setBook(idiot);
+
+        System.out.println(idiot);
+
+        library.addCommentToBookById(idiot.getId(), "Wow");
+
+        System.out.println(library.getBooksByGenre("drama"));
+        System.out.println(library.getCommentsByBookId(idiot.getId()));
     /*
         Thread.sleep(3000);
 
@@ -35,7 +46,7 @@ public class MainDemo {
         System.out.println("\n\n----------------------------------------------\n\n\n");
         *
      */
-        library.addCommentToBookById(1, "Greate");
+        //library.addCommentToBookById(1, "Greate");
 
     }
 }

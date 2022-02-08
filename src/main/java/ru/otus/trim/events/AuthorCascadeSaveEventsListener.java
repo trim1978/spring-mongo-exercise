@@ -11,7 +11,7 @@ import ru.otus.trim.service.SequenceGeneratorService;
 @Component
 public class AuthorCascadeSaveEventsListener extends AbstractMongoEventListener<Author> {
 
-    //@Autowired
+    @Autowired
     private SequenceGeneratorService sequenceGeneratorService;
     @Override
     public void onBeforeConvert(BeforeConvertEvent<Author> event) {
