@@ -12,10 +12,12 @@ import java.util.Objects;
 
 @Component
 public class BookCascadeSaveEventsListener extends AbstractMongoEventListener<Book> {
-    //@Autowired
-    //private CommentRepository commentRepository;
-    @Autowired
-    private SequenceGeneratorService sequenceGeneratorService;
+    private final SequenceGeneratorService sequenceGeneratorService;
+
+    public BookCascadeSaveEventsListener(SequenceGeneratorService sequenceGeneratorService) {
+        this.sequenceGeneratorService = sequenceGeneratorService;
+    }
+
     @Override
     public void onBeforeConvert(BeforeConvertEvent<Book> event) {
         System.out.println(" BEFORE " + event);

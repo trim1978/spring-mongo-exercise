@@ -17,10 +17,7 @@ public class Book {
     private String title;
     @DBRef
     private Author author;
-    //@DBRef
     private List<String> genres;
-    //@DocumentReference
-    //private List<Comment> comments;
 
     public Book(String title, Author author, String genres) {
         this(title,author,List.of(genres));
@@ -41,16 +38,6 @@ public class Book {
 
     public Book() {
     }
-
-    /*
-    public Comment addComment (String text){
-        Comment c = new Comment(text);
-        if (comments == null) this.comments = new LinkedList<>();
-        comments.add(c);
-        return c;
-    }
-    *
-     */
 
     public long getId() {
         return id;
@@ -83,14 +70,6 @@ public class Book {
     public void setGenres(List<String> genres) {
         this.genres = genres;
     }
-
-//    public List<Comment> getComments() {
-//        return comments;
-//    }
-//
-//    public void setComments(List<Comment> comments) {
-//        this.comments = comments;
-//    }
 
     @Override
     public String toString() {

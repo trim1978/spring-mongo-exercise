@@ -7,6 +7,6 @@ import ru.otus.trim.model.Author;
 import java.util.List;
 
 public interface AuthorRepository extends MongoRepository<Author, Integer> {
-
+    List<Author> findByName(String name);
     //List<Author> findAll();
 }

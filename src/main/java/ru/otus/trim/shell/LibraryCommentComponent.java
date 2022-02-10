@@ -13,8 +13,11 @@ import java.util.List;
 
 @ShellComponent
 public class LibraryCommentComponent {
-    //@Autowired
-    private LibraryService library;
+    private final LibraryService library;
+
+    public LibraryCommentComponent(LibraryService library) {
+        this.library = library;
+    }
 
     @ShellMethod(value = "Get comments", key = {"get_comments", "gc"})
     public List<Comment> getComments(long id) {
@@ -23,8 +26,8 @@ public class LibraryCommentComponent {
 
     @ShellMethod(value = "Add comment", key = {"add_comment", "ac"})
     //@ShellOption()
-    public void addComment(long id, String comment) {
-        ;
+    public void addComment(long id, String comment){
+        library.addCommentToBookById(id, comment);
     }
 
 }

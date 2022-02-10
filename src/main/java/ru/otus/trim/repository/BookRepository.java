@@ -7,6 +7,7 @@ import ru.otus.trim.model.Book;
 import java.util.List;
 
 public interface BookRepository extends MongoRepository<Book, Long>, BookRepositoryAdvanced {
-    //@Query(value = "?{0}")
-    //List<Book> findByGenres(String genres);
+
+    @Query("{'author.$id':?0}")
+    List<Book> findBooksByAuthor(long id);
 }

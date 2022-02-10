@@ -11,6 +11,8 @@ public interface LibraryService {
     Book removeBookById (long bookID);
     Book getBookById (long bookID);
     List<Book> getBooks ();
+
+    List<Book> getBooksByAuthorName(String name);
     Author getAuthor (String name);
     //Genre getGenre (String name);
     List<Author> getAuthors ();
@@ -18,5 +20,6 @@ public interface LibraryService {
 
     List<Comment> getCommentsByBookId (long bookID);
     void addCommentToBookById (long bookID, String text);
-    List<Book> getBooksByGenre (String genres);
+    List<Book> getBooksByGenre (String genre);
+    List<Book> getBooksByAuthor (String author);
 }

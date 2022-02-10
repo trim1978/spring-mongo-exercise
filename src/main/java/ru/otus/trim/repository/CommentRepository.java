@@ -7,8 +7,6 @@ import ru.otus.trim.model.Comment;
 
 import java.util.List;
 
-public interface CommentRepository extends MongoRepository<Comment, Long> {
+public interface CommentRepository extends MongoRepository<Comment, Long>, CommentRepositoryAdvanced {
 
-    @Query("{'book.id':'?0'}")
-    List<Comment> findByBook(long id);
 }

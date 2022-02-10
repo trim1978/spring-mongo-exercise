@@ -13,8 +13,11 @@ import static org.springframework.data.mongodb.core.query.Query.query;
 
 @Service
 public class SequenceGeneratorService {
-    @Autowired
-    private MongoOperations mongoOperations;
+    private final MongoOperations mongoOperations;
+
+    public SequenceGeneratorService(MongoOperations mongoOperations) {
+        this.mongoOperations = mongoOperations;
+    }
 
     public int generateIntSequence(String seqName) {
         DatabaseSequence counter = mongoOperations.findAndModify(query(where("_id").is(seqName)),

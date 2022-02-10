@@ -4,27 +4,35 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.mapping.event.AbstractMongoEventListener;
 import org.springframework.data.mongodb.core.mapping.event.BeforeConvertEvent;
 import org.springframework.stereotype.Component;
+import ru.otus.trim.model.Book;
 import ru.otus.trim.model.Comment;
+import ru.otus.trim.repository.BookRepository;
 import ru.otus.trim.repository.CommentRepository;
 import ru.otus.trim.service.SequenceGeneratorService;
 
+import java.util.Objects;
+
 @Component
 public class CommentCascadeSaveEventsListener extends AbstractMongoEventListener<Comment> {
-    @Autowired
-    private CommentRepository commentRepository;
-    @Autowired
-    private SequenceGeneratorService sequenceGeneratorService;
+    private final BookRepository bookRepository;
+    private final SequenceGeneratorService sequenceGeneratorService;
+
+    public CommentCascadeSaveEventsListener(BookRepository bookRepository, SequenceGeneratorService sequenceGeneratorService) {
+        this.bookRepository = bookRepository;
+        this.sequenceGeneratorService = sequenceGeneratorService;
+    }
+
     @Override
     public void onBeforeConvert(BeforeConvertEvent<Comment> event) {
         //System.out.println(" BEFORE " + event);
-        if (event.getSource().getId() < 1) {
-            event.getSource().setTime(System.currentTimeMillis());
-            event.getSource().setId(sequenceGeneratorService.generateLongSequence(Comment.SEQUENCE_NAME));
+        Comment comment = event.getSource();
+        if (comment.getId() < 1) {
+            comment.setTime(System.currentTimeMillis());
+            comment.setId(sequenceGeneratorService.generateLongSequence(Comment.SEQUENCE_NAME));
         }
         super.onBeforeConvert(event);
-//        Book book = event.getSource();
-//        if (book.getComments() != null) {
-//            book.getComments().stream().filter(e -> Objects.isNull(e.getTime())).forEach(commentRepository::save);
-//        }
+        if (comment.getBook() != null && comment.getBook().getId() <= 0) {
+            bookRepository.save(comment.getBook());//.stream().filter(e -> Objects.isNull(e.getId())).forEach(knowledgeRepository::save);
+        }
     }
 }

@@ -17,13 +17,15 @@ import java.util.List;
 
 @Service
 public class LibraryServiceImpl implements LibraryService {
-    @Autowired
-    public BookRepository books;
-    @Autowired
-    public AuthorRepository authors;
+    public final BookRepository books;
+    public final AuthorRepository authors;
+    public final CommentRepository comments;
 
-    @Autowired
-    public CommentRepository comments;
+    public LibraryServiceImpl(BookRepository books, AuthorRepository authors, CommentRepository comments) {
+        this.books = books;
+        this.authors = authors;
+        this.comments = comments;
+    }
 
     @Transactional
     @Override
@@ -72,6 +74,12 @@ public class LibraryServiceImpl implements LibraryService {
         return authors.findAll().stream().filter(t -> t.getName().equalsIgnoreCase(name)).findAny().orElse(authors.save(new Author(0, name)));
     }
 
+    @Override
+    public List<Book> getBooksByAuthorName(String name) {
+        Author author = authors.findByName(name).get(0);
+        return books.findBooksByAuthor(author.getId());
+    }
+
     @Transactional(readOnly = true)
     @Override
     public List<Author> getAuthors() {
@@ -102,11 +110,15 @@ public class LibraryServiceImpl implements LibraryService {
         if (book != null) {
             comments.save(new Comment(book, text));
         }
-
+        else System.out.println("book "+ bookID + " not found");
     }
 
     @Override
-    public List<Book> getBooksByGenre(String genres) {
-        return books.findByGenre (genres);
+    public List<Book> getBooksByGenre(String genre) {
+        return books.findByGenre (genre);
+    }
+    @Override
+    public List<Book> getBooksByAuthor(String author) {
+        return books.findByAuthor (author);
     }
 }

@@ -11,12 +11,22 @@ import java.util.List;
 
 @ShellComponent
 public class LibraryCommandComponent {
-    //@Autowired
-    private LibraryService library;
+
+    private final LibraryService library;
+
+    public LibraryCommandComponent(LibraryService library) {
+        this.library = library;
+    }
 
     @ShellMethod(value = "Add author", key = {"ins_author","ia","aa"})
     public Author addAuthor(String name) {
         return library.getAuthor(name);
+    }
+
+    @ShellMethod(value = "test", key = "gban")
+    public List<Book> getAuthorsByName(String name){
+
+        return this.library.getBooksByAuthorName(name);
     }
 
 //    @ShellMethod(value = "Add book", key = "ins_book")
@@ -61,6 +71,10 @@ public class LibraryCommandComponent {
     @ShellMethod(value = "Get books by genre", key = {"get_genre","gg"})
     public List<Book> getBooksByGenre(String genre) {
         return library.getBooksByGenre(genre);
+    }
+    @ShellMethod(value = "Get books by author", key = {"get_author","ga"})
+    public List<Book> getBooksByAuthor(String author) {
+        return library.getBooksByAuthor(author);
     }
 
 
