@@ -13,7 +13,6 @@ public interface LibraryService {
     List<Book> getBooks ();
 
     Author getAuthor (String name);
-    //Genre getGenre (String name);
     List<Author> getAuthors ();
     List<String> getGenres ();
 

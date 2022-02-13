@@ -9,7 +9,8 @@ import ru.otus.trim.repository.CommentRepository;
 import ru.otus.trim.model.Author;
 import ru.otus.trim.model.Book;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 @Service
@@ -27,28 +28,23 @@ public class LibraryServiceImpl implements LibraryService {
     @Transactional
     @Override
     public void setBook(Book book) {
-        //Genre genre = book.getGenre();
-        //int genreId = genre.getId();
-//        if (genreId == 0) {
-//            genre = getGenre(genre.getName());
-//        }
-        if (book.getId() == 0) {
-            Author author = book.getAuthor();
-            if (author.getId() == 0) {
-                authors.save(author);
-            }
-            books.save(book);
-        } else {
-            //books.updateBookById(book.getId(), genreId);
+        if (book.getId() > 0) {
+            Book book1 = books.findById(book.getId()).get();
+            book1.setGenres(book.getGenres());
+            book1.setAuthor(book.getAuthor());
+            book = book1;
         }
-        //return book;
+        books.save(book);
     }
 
     @Transactional
     @Override
     public Book removeBookById(long bookID) {
         Book book = books.findById(bookID).get();
-        if (book != null) books.delete(book);
+        if (book != null) {
+            books.delete(book);
+            for (Comment c : comments.findByBook(book)) comments.delete(c);
+        }
         return book;
     }
 
@@ -88,9 +84,15 @@ public class LibraryServiceImpl implements LibraryService {
     @Transactional(readOnly = true)
     @Override
     public List<String> getGenres() {
-        return new LinkedList<String>();
+        List<Book> booksAll = books.findAll();
+        HashSet<String> genres = new HashSet<>();
+        for (Book book : booksAll) {
+            for (String genre : book.getGenres()){
+                genres.add(genre);
+            }
+        }
+        return new ArrayList<String>(genres);
     }
-
 
     @Transactional(readOnly = true)
     @Override
@@ -99,20 +101,19 @@ public class LibraryServiceImpl implements LibraryService {
         if (book != null) {
             return comments.findByBook(book);
         }
-        //return comments.findAll();//ByBook(new ObjectId());
-        //return comments.findByBook(new ObjectId());
-        //return comments.findByBook(bookID);
         return List.of();
     }
 
+    @Transactional()
     @Override
     public void addCommentToBookById(long bookID, String text) {
         Book book = books.findById(bookID).get();
         if (book != null) {
             comments.save(new Comment(book, text));
-        } else System.out.println("book " + bookID + " not found");
+        } else throw new RuntimeException("book " + bookID + " not found");
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<Book> getBooksByGenre(String genre) {
         return books.findByGenres(genre);
