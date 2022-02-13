@@ -1,7 +1,5 @@
 package ru.otus.trim.service;
 
-import org.bson.types.ObjectId;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.otus.trim.model.Comment;
@@ -11,7 +9,6 @@ import ru.otus.trim.repository.CommentRepository;
 import ru.otus.trim.model.Author;
 import ru.otus.trim.model.Book;
 
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -35,14 +32,13 @@ public class LibraryServiceImpl implements LibraryService {
 //        if (genreId == 0) {
 //            genre = getGenre(genre.getName());
 //        }
-        if (book.getId() == 0){
+        if (book.getId() == 0) {
             Author author = book.getAuthor();
-            if (author.getId() == 0){
+            if (author.getId() == 0) {
                 authors.save(author);
             }
             books.save(book);
-        }
-        else{
+        } else {
             //books.updateBookById(book.getId(), genreId);
         }
         //return book;
@@ -75,9 +71,12 @@ public class LibraryServiceImpl implements LibraryService {
     }
 
     @Override
-    public List<Book> getBooksByAuthorName(String name) {
-        Author author = authors.findByName(name).get(0);
-        return books.findBooksByAuthor(author.getId());
+    public List<Book> getBooksByAuthor(String name) {
+        Author author = authors.findByName(name);
+        if (author != null) {
+            return books.findByAuthor(author);
+        }
+        return List.of();
     }
 
     @Transactional(readOnly = true)
@@ -89,19 +88,21 @@ public class LibraryServiceImpl implements LibraryService {
     @Transactional(readOnly = true)
     @Override
     public List<String> getGenres() {
-        return new LinkedList<String>  ();
+        return new LinkedList<String>();
     }
-
 
 
     @Transactional(readOnly = true)
     @Override
     public List<Comment> getCommentsByBookId(long bookID) {
-        //Book book = books.findById(bookID).get();
-        //if (book != null) return book.getComments();
+        Book book = books.findById(bookID).get();
+        if (book != null) {
+            return comments.findByBook(book);
+        }
         //return comments.findAll();//ByBook(new ObjectId());
         //return comments.findByBook(new ObjectId());
-        return comments.findByBook(bookID);
+        //return comments.findByBook(bookID);
+        return List.of();
     }
 
     @Override
@@ -109,16 +110,11 @@ public class LibraryServiceImpl implements LibraryService {
         Book book = books.findById(bookID).get();
         if (book != null) {
             comments.save(new Comment(book, text));
-        }
-        else System.out.println("book "+ bookID + " not found");
+        } else System.out.println("book " + bookID + " not found");
     }
 
     @Override
     public List<Book> getBooksByGenre(String genre) {
-        return books.findByGenre (genre);
-    }
-    @Override
-    public List<Book> getBooksByAuthor(String author) {
-        return books.findByAuthor (author);
+        return books.findByGenres(genre);
     }
 }

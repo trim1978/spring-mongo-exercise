@@ -23,12 +23,6 @@ public class LibraryCommandComponent {
         return library.getAuthor(name);
     }
 
-    @ShellMethod(value = "test", key = "gban")
-    public List<Book> getAuthorsByName(String name){
-
-        return this.library.getBooksByAuthorName(name);
-    }
-
 //    @ShellMethod(value = "Add book", key = "ins_book")
 //    public Book addBook(String title, String author, String genre) {
 //        return library.setBook(new Book(0, title, addAuthor(author), library.getGenre(genre)));

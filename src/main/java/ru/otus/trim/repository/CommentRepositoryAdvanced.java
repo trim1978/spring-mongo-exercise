@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface CommentRepositoryAdvanced {
     //@Query("{'book.id':'?0'}")
-    List<Comment> findByBook(long id);
+    //List<Comment> findByBook(long id);
 }

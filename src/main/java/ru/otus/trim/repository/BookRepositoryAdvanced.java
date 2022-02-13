@@ -5,6 +5,6 @@ import ru.otus.trim.model.Book;
 import java.util.List;
 
 public interface BookRepositoryAdvanced {
-    List<Book> findByGenre(String genre);
-    List<Book> findByAuthor(String author);
+    //List<Book> findByGenre(String genre);
+    //List<Book> findByAuthor(String author);
 }

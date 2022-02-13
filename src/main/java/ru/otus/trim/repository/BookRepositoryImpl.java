@@ -17,15 +17,15 @@ public class BookRepositoryImpl implements BookRepositoryAdvanced{
     public BookRepositoryImpl(MongoOperations mongo) {
         this.mongo = mongo;
     }
-
-    @Override
-    public List<Book> findByGenre(String genre) {
-        //db.books.find({ genres: { $elemMatch: { $eq: "drama" } } })
-        return mongo.find(Query.query(Criteria.where ("genres").elemMatch(new Criteria().is(genre))), Book.class);
-    }
-    @Override
-    public List<Book> findByAuthor(String author) {
-        //Author a = new Author(author);
-        return mongo.find (Query.query(Criteria.where ("author").elemMatch(Criteria.where ("name").is(author))), Book.class);
-    }
+//
+//    @Override
+//    public List<Book> findByGenre(String genre) {
+//        //db.books.find({ genres: { $elemMatch: { $eq: "drama" } } })
+//        return mongo.find(Query.query(Criteria.where ("genres").elemMatch(new Criteria().is(genre))), Book.class);
+//    }
+//    @Override
+//    public List<Book> findByAuthor(String author) {
+//        //Author a = new Author(author);
+//        return mongo.find (Query.query(Criteria.where ("author").elemMatch(Criteria.where ("name").is(author))), Book.class);
+//    }
 }
