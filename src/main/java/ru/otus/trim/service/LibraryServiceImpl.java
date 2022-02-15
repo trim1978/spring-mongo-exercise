@@ -31,6 +31,7 @@ public class LibraryServiceImpl implements LibraryService {
         if (book.getId() > 0) {
             Book book1 = books.findById(book.getId()).get();
             book1.setGenres(book.getGenres());
+            authors.save(book.getAuthor());
             book1.setAuthor(book.getAuthor());
             book = book1;
         }

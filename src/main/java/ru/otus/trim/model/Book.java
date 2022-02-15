@@ -19,6 +19,10 @@ public class Book {
     private Author author;
     private List<String> genres;
 
+    public Book(String title, String author, String genres) {
+        this(title,new Author (author), List.of(genres));
+    }
+
     public Book(String title, Author author, String genres) {
         this(title,author,List.of(genres));
     }
