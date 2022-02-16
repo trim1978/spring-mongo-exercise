@@ -12,6 +12,7 @@ import ru.otus.trim.model.Book;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class LibraryServiceImpl implements LibraryService {
@@ -29,7 +30,7 @@ public class LibraryServiceImpl implements LibraryService {
     @Override
     public void setBook(Book book) {
         if (book.getId() > 0) {
-            Book book1 = books.findById(book.getId()).get();
+            Book book1 = getBookById(book.getId());
             book1.setGenres(book.getGenres());
             authors.save(book.getAuthor());
             book1.setAuthor(book.getAuthor());
@@ -41,7 +42,7 @@ public class LibraryServiceImpl implements LibraryService {
     @Transactional
     @Override
     public Book removeBookById(long bookID) {
-        Book book = books.findById(bookID).get();
+        Book book = getBookById(bookID);
         if (book != null) {
             books.delete(book);
             for (Comment c : comments.findByBook(book)) comments.delete(c);
@@ -52,7 +53,8 @@ public class LibraryServiceImpl implements LibraryService {
     @Transactional(readOnly = true)
     @Override
     public Book getBookById(long bookID) {
-        return books.findById(bookID).get();
+        Optional<Book> opt = books.findById(bookID);
+        return opt.isPresent() ? opt.get() : null;
     }
 
     @Transactional(readOnly = true)
@@ -61,12 +63,24 @@ public class LibraryServiceImpl implements LibraryService {
         return books.findAll();
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     @Override
     public Author getAuthor(String name) {
-        return authors.findAll().stream().filter(t -> t.getName().equalsIgnoreCase(name)).findAny().orElse(authors.save(new Author(0, name)));
+        return authors.findByName(name);
     }
 
+    @Transactional
+    @Override
+    public Author removeAuthor(String name) {
+        Author author = authors.findByName(name);
+        if (author != null){
+            for (Book book : books.findByAuthor (author)) removeBookById(book.getId ());
+            authors.delete(author);
+        }
+        return author;
+    }
+
+    @Transactional(readOnly = true)
     @Override
     public List<Book> getBooksByAuthor(String name) {
         Author author = authors.findByName(name);
@@ -88,17 +102,15 @@ public class LibraryServiceImpl implements LibraryService {
         List<Book> booksAll = books.findAll();
         HashSet<String> genres = new HashSet<>();
         for (Book book : booksAll) {
-            for (String genre : book.getGenres()){
-                genres.add(genre);
-            }
+            genres.addAll(book.getGenres());
         }
-        return new ArrayList<String>(genres);
+        return new ArrayList<>(genres);
     }
 
     @Transactional(readOnly = true)
     @Override
     public List<Comment> getCommentsByBookId(long bookID) {
-        Book book = books.findById(bookID).get();
+        Book book = getBookById(bookID);
         if (book != null) {
             return comments.findByBook(book);
         }
@@ -108,7 +120,7 @@ public class LibraryServiceImpl implements LibraryService {
     @Transactional()
     @Override
     public void addCommentToBookById(long bookID, String text) {
-        Book book = books.findById(bookID).get();
+        Book book = getBookById(bookID);
         if (book != null) {
             comments.save(new Comment(book, text));
         } else throw new RuntimeException("book " + bookID + " not found");

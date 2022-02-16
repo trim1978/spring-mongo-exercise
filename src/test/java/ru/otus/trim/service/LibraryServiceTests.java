@@ -91,8 +91,8 @@ class LibraryServiceTests {
     void updateTest() {
         Book book = new Book(0, TITLE_1, new Author(0, AUTHOR_PUSHKIN), List.of("horror"));
         library.setBook(book);
-        LinkedList<String> l = new LinkedList<String> (book.getGenres());
-        l.add("some");
+        LinkedList<String> l = new LinkedList<> (book.getGenres());
+        l.add("lyrics");
         book.setGenres(l);
         library.setBook(book);
         verify(bookRepository, times(2)).save(book);
@@ -101,7 +101,7 @@ class LibraryServiceTests {
     @DisplayName("insert")
     @Test
     void insertTest() {
-        Book book = new Book(0, TITLE_1, new Author(0, AUTHOR_PUSHKIN), List.of("horror"));
+        Book book = new Book(TITLE_2, AUTHOR_PUSHKIN, "lyrics");
         library.setBook(book);
         verify(bookRepository, times(1)).save(book);
     }
@@ -109,10 +109,11 @@ class LibraryServiceTests {
     @DisplayName("delete")
     @Test
     void deleteTest() {
-        Book book = new Book(0, TITLE_1, new Author(0, AUTHOR_PUSHKIN), List.of("horror"));
-        library.setBook(book);
-        library.removeBookById(book.getId());
-        verify(bookRepository, times(1)).delete(book);
+        //Book book = new Book(TITLE_2, AUTHOR_PUSHKIN, "lyrics");
+        //library.setBook(book);
+        library.removeBookById(1);
+        //verify(bookRepository, times(1)).getBookById(1);
+        verify(bookRepository, times(1)).delete(any());
     }
 
 //	@DisplayName("delete")

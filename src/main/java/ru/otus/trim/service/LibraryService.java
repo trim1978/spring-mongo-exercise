@@ -13,7 +13,9 @@ public interface LibraryService {
     List<Book> getBooks ();
 
     Author getAuthor (String name);
+    Author removeAuthor (String name);
     List<Author> getAuthors ();
+
     List<String> getGenres ();
 
     List<Comment> getCommentsByBookId (long bookID);

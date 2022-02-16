@@ -44,17 +44,8 @@ public class DatabaseChangelog {
         b2 = repository.save(new Book("Fantazery", a3, "comedy"));
         b3 = new Book("Borodino", a2, List.of("drama","lyrics"));
         repository.save(new Book("Mciri", a2, List.of("drama","lyrics")));
-//        b3.addComment("Wonderfull !");
-//        repository.save(b3);
     }
 
-//    @ChangeSet(order = "002", id = "insertLermontov", author = "ydvorzhetskiy")
-//    public void insertLermontov(MongoDatabase db) {
-//        MongoCollection<Document> myCollection = db.getCollection("persons");
-//        var doc = new Document().append("name", "Lermontov");
-//        myCollection.insertOne(doc);
-//    }
-//
     @ChangeSet(order = "005", id = "insertComments", author = "stvort")
     public void insertPushkin(CommentRepository repository) {
         repository.save(new Comment(b3, "Super"));
