@@ -29,14 +29,14 @@ public class LibraryServiceImpl implements LibraryService {
     @Transactional
     @Override
     public void setBook(Book book) {
-        if (book.getId() > 0) {
+        /*if (book.getId() > 0) {
             Book book1 = getBookById(book.getId());
             book1.setGenres(book.getGenres());
-            authors.save(book.getAuthor());
+            //authors.save(book.getAuthor());
             book1.setAuthor(book.getAuthor());
-            book = book1;
+            books.save(book1);
         }
-        books.save(book);
+        else */books.save(book);
     }
 
     @Transactional
@@ -54,7 +54,7 @@ public class LibraryServiceImpl implements LibraryService {
     @Override
     public Book getBookById(long bookID) {
         Optional<Book> opt = books.findById(bookID);
-        return opt.isPresent() ? opt.get() : null;
+        return opt.orElse(null);
     }
 
     @Transactional(readOnly = true)

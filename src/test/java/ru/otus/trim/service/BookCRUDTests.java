@@ -42,6 +42,15 @@ class BookCRUDTests {
         assertThat(book.getGenres().contains(GENRE_DRAMA));
     }
 
+    @DisplayName("insert author")
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
+    @Test
+    void insertAuthorTest() {
+        Book book = new Book (TITLE_1, "AUTHOR_PUSHKIN", GENRE_DRAMA);
+        library.setBook(book);
+        assertThat(library.getAuthor("AUTHOR_PUSHKIN")).isNotNull();
+    }
+
     @DisplayName("update")
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
     @Test
