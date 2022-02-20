@@ -25,7 +25,6 @@ import static org.mockito.Mockito.*;
 
 @DataMongoTest
 @DisplayName("Test Books library")
-//@ComponentScan(basePackages = "ru.otus.trim",excludeFilters = {@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE,classes={DatabaseChangelog.class})})
 @Import(LibraryServiceImpl.class)
 class LibraryServiceTests {
 
@@ -66,25 +65,25 @@ class LibraryServiceTests {
         verify(bookRepository, times(1)).findAll();
     }
 
-    @DisplayName("get all comments")
-    @Test
-    void readAllComments() {
-        //Author author = new Author(0, AUTHOR_PUSHKIN);
-        Book book = new Book(TITLE_1, "AUTHOR_PUSHKIN", "horror");
-        library.setBook(book);
-        library.getCommentsByBookId(book.getId());
-        verify(commentRepository, times(1)).findByBook(book);
-        //verify(authorRepository, times(3)).save(author);
-    }
+//    @DisplayName("get all comments")
+//    @Test
+//    void readAllComments() {
+//        //Author author = new Author(0, AUTHOR_PUSHKIN);
+//        Book book = new Book(TITLE_1, "AUTHOR_PUSHKIN", "horror");
+//        library.setBook(book);
+//        library.getCommentsByBookId(book.getId());
+//        verify(commentRepository, times(1)).findByBook(book);
+//        //verify(authorRepository, times(3)).save(author);
+//    }
 
-    @DisplayName("insert author")
-    @Test
-    void insertAuthor() {
-        //Author author = new Author();
-        Book book = new Book(TITLE_1, "AUTHOR_PUSHKIN", "horror");
-        library.setBook(book);
-        verify(authorRepository, times(1)).save(book.getAuthor());
-    }
+//    @DisplayName("insert author")
+//    @Test
+//    void insertAuthor() {
+//        //Author author = new Author();
+//        Book book = new Book(TITLE_1, "AUTHOR_PUSHKIN", "horror");
+//        library.setBook(book);
+//        verify(authorRepository, times(1)).save(book.getAuthor());
+//    }
 
     @DisplayName("update")
     @Test
@@ -106,16 +105,16 @@ class LibraryServiceTests {
         verify(bookRepository, times(1)).save(book);
     }
 
-    @DisplayName("delete")
-    @Test
-    void deleteTest() {
-        //Book book = new Book(TITLE_2, AUTHOR_PUSHKIN, "lyrics");
-        //library.setBook(book);
-        //long id = book.getId();
-        library.removeBookById(1);
-        verify(bookRepository, times(1)).delete(any());
-        //verify(bookRepository, times(2)).findById(id);
-    }
+//    @DisplayName("delete")
+//    @Test
+//    void deleteTest() {
+//        //Book book = new Book(TITLE_2, AUTHOR_PUSHKIN, "lyrics");
+//        //library.setBook(book);
+//        //long id = book.getId();
+//        library.removeBookById(1);
+//        verify(bookRepository, times(1)).delete(any());
+//        //verify(bookRepository, times(2)).findById(id);
+//    }
 
 //	@DisplayName("delete")
 //	@Test
